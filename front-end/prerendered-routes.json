@@ -1,0 +1,15 @@
+{
+  "routes": [
+    "/login",
+    "/my-leagues",
+    "/my-leagues/create",
+    "/my-leagues/create/add-team",
+    "/my-teams",
+    "/my-teams/team-form",
+    "/my-teams/team-form/add-player",
+    "/next-matches",
+    "/profile",
+    "/profile/edit",
+    "/register"
+  ]
+}

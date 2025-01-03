@@ -1,0 +1,310 @@
+@mixin vertical-separation($gap) {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: $gap;
+}
+
+@mixin horitzontal-separation($gap, $h-alignment, $v-alignment) {
+  display: flex;
+  flex-direction: row;
+  align-items: $v-alignment;
+  gap: $gap;
+  justify-content: $h-alignment;
+}
+
+@mixin center($direction) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin max-width {
+  max-width: $max-width;
+  margin: 0 auto;
+}
+
+@layer reset {
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  :where(ul, body) {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+@layer base {
+  main {
+    margin: 1rem 1rem 8rem ;
+
+    @media(min-width: $medium-device-breakpoint){
+      max-width: $max-width;
+      margin: 1rem auto 8rem;
+    }
+  }
+}
+
+@layer utilities {
+
+  .vertical-extra-small {
+    @include vertical-separation(0.5rem);
+  }
+
+  .vertical-small {
+    @include vertical-separation(1rem);
+  }
+
+  .vertical-medium {
+    @include vertical-separation(1.5rem);
+  }
+
+  .vertical-large {
+    @include vertical-separation(3rem);
+  }
+
+  .horizontal-space-between {
+    @include horitzontal-separation(1rem, space-between, center);
+  }
+
+  .horizontal-small {
+    @include horitzontal-separation(0.5rem, center, center);
+  }
+
+  .center-component {
+    @include center(column);
+  }
+
+  .sticky-nav {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    padding: 1.25rem;
+    z-index: 1000; 
+    @include center(column);
+    gap: 1.25rem;
+  }
+
+  .bottom-fixed {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 1.25rem;
+    width: 100%;
+    z-index: 900;
+  }
+
+  .center-fixed {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    z-index: 1000;
+  }
+
+  .grid-layout {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr;
+
+    @media(min-width: $medium-device-breakpoint){
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .icon-container {
+    width: 24px;
+    height: 24px;
+    @include center(column);
+  }
+
+  .fill-content {
+    width: 100%;
+  }
+
+  .center-text {
+    text-align: center;
+  }
+
+  .text-align-right {
+    @include horitzontal-separation(0.5rem, flex-end, center);
+  }
+
+  .max-width {
+    @include max-width();
+  }
+}
+
+@layer components {
+
+  // Button
+  .btn {
+    @include horitzontal-separation(0.5rem, center, center);
+    padding: 1rem 1.5rem;
+    box-sizing: border-box;
+  }
+
+  .icon-btn {
+    @include center(row);
+    padding: 0.5rem;
+  }
+
+  // Card
+  .card {
+    padding: 1.5rem;
+
+    &.clickable-card {
+      @include horitzontal-separation(1rem, space-between, center);
+    }
+
+    &.info-card {
+      @include horitzontal-separation(1rem, space-between, flex-start);
+    }
+
+    &.match-card {
+      @include vertical-separation(1.25rem);
+
+      .teams-score {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+      }
+
+      .score {
+        @include horitzontal-separation(1rem, center, center);
+      }
+
+      .team-name-right {
+        text-align: right;
+      }
+
+      .team-name-left {
+        text-align: left;
+      }
+    }
+  }
+
+  // Table
+  .table {
+    padding: 0.75rem;
+    width: 100%;
+
+    .table-row {
+      @include horitzontal-separation(1rem, space-between, center)
+    }
+
+    .table-cell {
+      padding: 1rem 0.75rem;
+      min-width: 2rem;
+
+      &.first-column {
+        text-align: left;
+      }
+
+      &.last-column {
+        text-align: center;
+      }
+    }
+  }
+
+  // Tabs
+  .tabs {
+    @include center(row);
+    gap: 0;
+    padding: 0.25rem;
+
+    header & {
+      max-width: 48rem;
+    }
+
+    .tab {
+      @include center(row);
+      padding: 1rem;
+
+      @media(min-width: $small-device-breakpoint){
+        padding: 1rem 2rem;
+      }
+
+      &.icon-tab {
+        @include center(row);
+        height: 100%;
+        padding: 0.875rem;
+      }
+    }
+  }
+
+  .sub-tabs-wrapper {
+    @include vertical-separation(0.5rem);
+    padding: 0.25rem;
+  }
+
+  // Form & Inputs
+  .form-and-button {
+    @include vertical-separation(5rem);
+  }
+
+  :where(.input, .selector-option-structure) {
+    padding: 1rem 1.5rem;
+  }
+
+  .error-label {
+    @include horitzontal-separation(0.5rem, flex-start, center);
+    padding: 0.25rem 0.5rem;
+  }
+
+  // Badge
+  .badge {
+    padding: 0.5rem 0.75rem;
+  }
+
+  // Toast
+  .toast {
+    @include horitzontal-separation(0.5rem, flex-start, center);
+    @include max-width();
+    padding: 1rem;
+  }
+
+  //Modal
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 900;
+  }
+
+  .modal {
+    @include vertical-separation(0rem);
+    @include max-width();
+    padding: 1.5rem;
+
+    .modal-title {
+      padding-bottom: 1rem;
+      @include horitzontal-separation(1rem, space-between, flex-end);
+    }
+
+    .modal-actions {
+      padding: 1rem;
+      @include horitzontal-separation(0.5rem, flex-start, center);
+    }
+  }
+
+  //Spinner
+  .spinner-container {
+    position: fixed;
+    inset: 0;
+    @include center(row);
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 1100;
+  }
+}
+
+@layer override {
+  .btn-small {
+    padding: 0.5rem 0.75rem;
+  }
+}
